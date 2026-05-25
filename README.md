@@ -1,13 +1,13 @@
-# VibeLang
+# AuraLang (aka VibeLang)
 
-VibeLang is a small interpreted language built on top of Python and Lark.  
+AuraLang is a small interpreted language built on top of Python and Lark.  
 It focuses on simple structure, readable syntax, and predictable behavior.
 
 The language is designed to be easy to understand, easy to extend, and useful for experimenting with parsing and runtime execution.
 
 ## Overview
 
-VibeLang includes:
+AuraLang includes:
 
 - A custom grammar defined with Lark
 - A transformer that converts parse trees into a clean AST
@@ -65,7 +65,7 @@ Additional arguments can be passed and used as inputs within the program.
 
 ## Language Syntax
 
-VibeLang uses a clear and structured syntax that follows a consistent pattern across all constructs. The goal is to keep programs easy to read and reason about.
+AuraLang uses a clear and structured syntax that follows a consistent pattern across all constructs. The goal is to keep programs easy to read and reason about.
 
 ### Variables and Assignment
 
@@ -78,7 +78,7 @@ number IS_GIVING number PLUS 5
 
 ### Data Types
 
-VibeLang supports a small set of core types:
+AuraLang supports a small set of core types:
 
 - Numbers (e.g. 10, 3.14)
 - Strings (e.g. "hello")
@@ -182,7 +182,7 @@ Followed by a sequence of commands executed in order.
 
 ## Notes
 
-VibeLang is an evolving project focused on language design and execution models.  
+AuraLang is an evolving project focused on language design and execution models.  
 The implementation is intentionally kept straightforward to make experimentation and modification easy.
 
 > **DO NOT USE THIS IN PRODUCTION**
