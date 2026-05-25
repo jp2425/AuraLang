@@ -56,7 +56,7 @@ def main():
         else:
             print(f"Warning '{arg}' was ignored since it does not follow the convention - key=value")
     lang = AuraLang()
-    result = lang.run_program(content,**input_kwargs)
+    result = lang.run_program(content,input_kwargs)
 
     if result is not None:
         print("======== OUTPUT ========")
