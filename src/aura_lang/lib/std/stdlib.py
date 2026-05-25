@@ -23,7 +23,6 @@ class StdLib(Library):
                 raise AuraRuntimeError(f"Key '{n}' not found")
 
             return squad[n]
-
         # list / str
         if not isinstance(squad, (list, str)):
             raise AuraTypeError("SPILL needs SQUAD or LETTERS")
@@ -31,7 +30,7 @@ class StdLib(Library):
         if not isinstance(n, int):
             raise AuraTypeError("SPILL needs integer indexes")
 
-        if n < 0 or n >= len(squad):
+        if n >= len(squad):
             raise AuraRuntimeError("SPILL index off bound")
 
         return squad[n]

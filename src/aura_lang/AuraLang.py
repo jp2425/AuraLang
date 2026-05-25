@@ -27,15 +27,16 @@ class AuraLang:
             lexer="dynamic",
         )
 
-    def run_program(self, program: str, **kwargs):
+    def run_program(self, program: str, values: dict):
         """
         Function that is used to run a AuraLang program
         :param program: text with the program
+        :param values: values that are passed to the program. in the format {"parameter":"value"}
         :return: return value of the program
         """
 
         parser = self._build_parser(str(self.default_grammar_path))
-
+        print(self.default_grammar_path)
         try:
             tree = parser.parse(program)
         except UnexpectedInput as e:
@@ -47,7 +48,7 @@ class AuraLang:
 
 
 
-        interpreter = AuraInterpreter(inputs=kwargs)
+        interpreter = AuraInterpreter(inputs=values)
 
         try:
             result = interpreter.run(ast)
