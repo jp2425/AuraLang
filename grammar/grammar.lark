@@ -1,0 +1,171 @@
+?start: inputs block
+
+inputs: AURA variable_name ("," variable_name)*
+
+block: command*
+
+?command: attribution
+        | function_call
+        | conditional_structure
+        | repetition_structure
+        | drop
+
+// --------------------
+// Declarations & Attribution
+// --------------------
+declaration: MOOD variable_name
+?variable_name: CNAME
+
+attribution: declaration IS_GIVING value
+           | variable_name IS_GIVING value
+
+?value: bool_expr
+      | literal
+      | variable_name
+      | operator
+      | arithmetic
+      | function_call
+
+
+// --------------------
+// Arithmetic
+// --------------------
+arithmetic: arith_operand arith_op arith_operand
+
+arith_operand: function_call
+             | variable_name
+             | number
+
+arith_op: PLUS
+        | MINUS
+        | TIMES
+        | DIVIDED
+
+// --------------------
+// Operators
+// --------------------
+operator: comparison_operation
+        | big_operation
+        | small_operation
+
+comparison_operation: comparison_left_operator comparison_operator comparison_right_operator
+comparison_left_operator: vibe | function_call | variable_name | number | letters
+comparison_right_operator: vibe |function_call | variable_name | number | letters
+comparison_operator: ME_TOO | "=="
+
+big_operation: big_left_operator big_operator big_right_operator
+big_left_operator: function_call | variable_name | number | letters
+big_right_operator: function_call | variable_name | number | letters
+big_operator: BIG | ">"
+
+small_operation: small_left_operator small_operator small_right_operator
+small_left_operator: function_call | variable_name | number | letters
+small_right_operator: function_call | variable_name | number | letters
+small_operator: SMALL | "<"
+
+// --------------------
+// Bool expressions
+// --------------------
+?bool_expr: vibe
+          | variable_name
+          | operator
+          | and_operator
+          | or_operator
+          | REKT bool_expr
+
+and_operator: bool_expr AND bool_expr
+or_operator: bool_expr OR bool_expr
+
+// --------------------
+// Repetition
+// --------------------
+repetition_structure: COOK_FOR "(" loop_count "," loop_iteration_identifier ")" block CHEFF_KISS
+
+?loop_count: number
+           | variable_name
+           | function_call
+
+loop_iteration_identifier: variable_name
+
+// --------------------
+// Functions
+// --------------------
+function_call: CNAME "(" [function_parameter ("," function_parameter)*] ")"
+
+function_parameter: vibe
+                  | letters
+                  | number
+                  | variable_name
+                  | squad
+                  | function_call
+
+// --------------------
+// Conditional
+// --------------------
+conditional_structure: VIBE_CHECK "(" bool_expr ")" SLAY true_block [FLOP false_block]
+
+true_block: SEPARATION_START block SEPARATION_CLOSE
+false_block: SEPARATION_START block SEPARATION_CLOSE
+
+// --------------------
+// Data types
+// --------------------
+literal: letters
+       | jason
+       | number
+       | vibe
+       | squad
+
+number: NUMBER
+letters: STRING
+
+jason: "{" [json_par ("," json_par)*] "}" -> json_tree
+json_par: letters ":" literal
+
+vibe: "real" -> vibe_true
+    | "fake" -> vibe_false
+
+squad: "[" [literal ("," literal)*] "]"
+
+// --------------------
+// Drop
+// --------------------
+drop: DROP (variable_name | bool_expr | function_call | literal)
+
+// --------------------
+// Keywords
+// --------------------
+SLAY: "SLAY"
+FLOP: "FLOP"
+CHEFF_KISS: "CHEFF_KISS"
+COOK_FOR: "COOK_FOR"
+VIBE_CHECK: "VIBE_CHECK"
+AURA: "AURA"
+MOOD: "MOOD"
+IS_GIVING: "IS_GIVING"
+AND: "AND"
+OR: "OR"
+REKT: "REKT"
+DROP: "DROP"
+
+PLUS: "PLUS"
+MINUS: "MINUS"
+TIMES: "TIMES"
+DIVIDED: "DIVIDED"
+
+ME_TOO: "ME_TOO"
+BIG: "BIG"
+SMALL: "SMALL"
+
+SEPARATION_START: "{"
+SEPARATION_CLOSE: "}"
+
+// --------------------
+// Imports
+// --------------------
+%import common.CNAME
+%import common.SIGNED_NUMBER -> NUMBER
+%import common.ESCAPED_STRING -> STRING
+%import common.WS
+
+%ignore WS

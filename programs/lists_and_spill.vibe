@@ -1,0 +1,11 @@
+AURA X
+
+MOOD list IS_GIVING [10, 20, 30]
+
+MOOD first IS_GIVING SPILL(list, 0)
+MOOD last IS_GIVING SPILL(list, 2)
+
+SCREAM(first)
+SCREAM(last)
+
+DROP last

@@ -1,0 +1,10 @@
+AURA X
+
+MOOD user IS_GIVING {"name":"alice", "role":"admin", "composed":{"key": "value"}}
+
+SCREAM(user)
+
+SCREAM(SPILL(user, "name"))
+SCREAM(SPILL(SPILL(user, "composed"), "key"))
+
+DROP user

@@ -1,0 +1,19 @@
+AURA X
+
+MOOD numbers IS_GIVING [1, 2, 3, 4]
+MOOD total IS_GIVING 0
+
+COOK_FOR(SIZE(numbers), i)
+    MOOD n IS_GIVING SPILL(numbers, i)
+
+    VIBE_CHECK(n BIG 2)
+    SLAY
+    {
+        total IS_GIVING total PLUS n
+    }
+CHEFF_KISS
+
+SCREAM("filtered total:")
+SCREAM(total)
+
+DROP total

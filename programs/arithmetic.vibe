@@ -1,0 +1,10 @@
+AURA X
+
+MOOD number IS_GIVING 10
+
+number IS_GIVING number PLUS 5
+number IS_GIVING number TIMES 2
+
+SCREAM(number)
+
+DROP number

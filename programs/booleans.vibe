@@ -1,0 +1,14 @@
+AURA X
+
+MOOD a IS_GIVING real
+MOOD b IS_GIVING fake
+
+MOOD result IS_GIVING a AND b
+
+SCREAM(result)
+
+result IS_GIVING REKT result
+
+SCREAM(result)
+
+DROP result

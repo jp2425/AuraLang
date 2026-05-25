@@ -1,0 +1,16 @@
+AURA X
+
+MOOD number IS_GIVING 15
+
+VIBE_CHECK(number BIG 10)
+SLAY
+{
+    SCREAM("number is big")
+    number IS_GIVING number PLUS 5
+}
+FLOP
+{
+    SCREAM("number is small")
+}
+
+DROP number

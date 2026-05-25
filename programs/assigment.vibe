@@ -1,0 +1,9 @@
+AURA X
+
+MOOD number IS_GIVING 10
+MOOD text IS_GIVING "hello"
+
+SCREAM(number)
+SCREAM(text)
+
+DROP number
