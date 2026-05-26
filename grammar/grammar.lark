@@ -120,7 +120,14 @@ number: NUMBER
 letters: STRING
 
 jason: "{" [json_par ("," json_par)*] "}" -> json_tree
-json_par: letters ":" literal
+json_par: letters ":" json_value
+
+
+?json_value: literal
+           | variable_name
+           | function_call
+           | arithmetic
+           | operator
 
 vibe: "real" -> vibe_true
     | "fake" -> vibe_false

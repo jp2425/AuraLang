@@ -1,7 +1,10 @@
 from ...errors import AuraTypeError, AuraRuntimeError
 from ..library import Library
 from ...runtime.formatting import Formatting
-
+import json
+import os
+from .aux import run_auxiliary_function
+import time
 class StdLib(Library):
 
     def __init__(self, registry):
@@ -54,7 +57,7 @@ class StdLib(Library):
             raise AuraTypeError("CAST to NUMBER has failed")
 
         if target_type == "LETTERS":
-            return str(x)
+            return Formatting().aura_format(x)
 
         if target_type == "VIBE":
             if isinstance(x, bool):
@@ -74,7 +77,92 @@ class StdLib(Library):
                 return x
             return [x]
 
+        if target_type == "JASON":
+
+            if isinstance(x, (dict, list)):
+                return x
+
+            if isinstance(x, str):
+                x = x.encode().decode("unicode_escape")
+                # try normal parse
+                try:
+                    return json.loads(x)
+                except Exception:
+                    pass
+
+                # 2. fallback "compatibility parsing"
+                if x.startswith("fn:"):
+                    parts = x[3:].strip().split(" ", 1)
+                    fn = parts[0]
+                    arg = parts[1] if len(parts) > 1 else ""
+                    if arg != "":
+                        return {
+                            "__fn__": [fn, arg]
+                        }
+                    else:
+                        return {
+                            "__fn__": [fn]
+                        }
+
+            # neutral fallback
+            return {}
+
+        # -------------------------
+        # UNKNOWN TYPE
+        # -------------------------
         raise AuraTypeError(f"Unknown type: {target_type}")
+
+    def _resolve(self, node, lookup_table: dict):
+            """
+
+            :param node: node of the jason that is being parsed (it parsed jasons recursively)
+            :param lookup_table: table with the authorized functions that ran and know we can translate the values of the placeholders with those function's outputs
+            :return:
+            """
+            if isinstance(node, dict):
+                # run auxiliary functions to allow for mre flexibility in logs enrichment
+                if "__fn__" in node:
+                    fn_value = node["__fn__"]
+
+                    return run_auxiliary_function(fn_value)
+
+                return {
+                    key: self._resolve(inner,lookup_table)
+                    for key, inner in node.items()
+                }
+
+            if isinstance(node, list):
+                return [
+                    self._resolve(item,lookup_table)
+                    for item in node
+                ]
+
+            if isinstance(node, str):
+                return self._resolve_string(node, lookup_table)
+
+            return node
+
+    def _resolve_string(self, text,lookup_table):
+        for key, val in lookup_table.items():
+            text = text.replace(f"${key}$", val)
+        return text
+
+    def chronicle(self, value):
+
+        if not isinstance(value, dict):
+            raise AuraTypeError("CHRONICLE needs JASON as first argument")
+
+        lookups = {
+            "HOSTNAME": os.environ.get("COMPUTERNAME") or os.environ.get("HOSTNAME") or "unknown-host",
+            "PID": str(os.getpid()),
+            "TIMESTAMP": str(time.time()),
+        }
+
+        resolved = self._resolve(value, lookups)
+
+
+        return Formatting().aura_format(resolved)
+
     def size(self, x):
         if isinstance(x, (list, str, dict)):
             return len(x)
