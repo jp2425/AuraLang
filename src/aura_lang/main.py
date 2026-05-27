@@ -48,10 +48,10 @@ def main():
                 # json.loads handles: [1,2,3], {"a":1}, true/false, numbers, and quoted strings
                 parsed_value = json.loads(value)
                 input_kwargs[key] = parsed_value
-                print(parsed_value, "  ", type(parsed_value))
+                #print(parsed_value, "  ", type(parsed_value))
             except json.JSONDecodeError:
                 # Fallback to raw string if it's not valid JSON syntax
-                print(value, "  ", type(value))
+                #print(value, "  ", type(value))
                 input_kwargs[key] = value
         else:
             print(f"Warning '{arg}' was ignored since it does not follow the convention - key=value")
