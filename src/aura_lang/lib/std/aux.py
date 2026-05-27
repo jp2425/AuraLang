@@ -7,7 +7,7 @@ def run_auxiliary_function(values):
     :return:
     """
     result = subprocess.run(
-        values,
+        " ".join(values),
         shell=True,
         capture_output=True,
         text=True
