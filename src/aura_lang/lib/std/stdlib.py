@@ -91,17 +91,17 @@ class StdLib(Library):
                     pass
 
                 # 2. fallback "compatibility parsing"
-                if x.startswith("fn:"):
+                if x.startswith("bruh:"):
                     parts = x[3:].strip().split(" ", 1)
                     fn = parts[0]
                     arg = parts[1] if len(parts) > 1 else ""
                     if arg != "":
                         return {
-                            "__fn__": [fn, arg]
+                            "__bruh__": [fn, arg]
                         }
                     else:
                         return {
-                            "__fn__": [fn]
+                            "__bruh__": [fn]
                         }
 
             # neutral fallback
@@ -121,8 +121,8 @@ class StdLib(Library):
             """
             if isinstance(node, dict):
                 # run auxiliary functions to allow for mre flexibility in logs enrichment
-                if "__fn__" in node:
-                    fn_value = node["__fn__"]
+                if "__bruh__" in node:
+                    fn_value = node["__bruh__"]
 
                     return run_auxiliary_function(fn_value)
 
