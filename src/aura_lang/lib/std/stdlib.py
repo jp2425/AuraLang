@@ -94,7 +94,6 @@ class StdLib(Library):
                 if x.startswith("bruh:"):
                     parts = x[5:].strip().split(" ", 1)
                     fn = parts[0]
-                    print("FN: ",fn)
                     arg = parts[1] if len(parts) > 1 else ""
                     if arg != "":
                         return {
@@ -120,7 +119,6 @@ class StdLib(Library):
             :param lookup_table: table with the authorized functions that ran and know we can translate the values of the placeholders with those function's outputs
             :return:
             """
-            print(node)
             if isinstance(node, dict):
                 # run auxiliary functions to allow for mre flexibility in logs enrichment
                 if "__bruh__" in node:
